@@ -1,8 +1,8 @@
-package buildToTestLab;
+package testingDates;
 
 import java.util.Scanner;
 
-public class Date
+public class Date implements Cloneable
 {
     private String month;
     private int day;
@@ -41,6 +41,18 @@ public class Date
         month = aDate.month;
         day = aDate.day;
         year = aDate.year;
+    }
+    
+    @Override
+    public Object clone() {
+    	return new Date(this);
+    }
+    
+    @Override
+    public boolean equals(Object maybeDate) {
+    	if (maybeDate == null || maybeDate.getClass() != getClass()) return false;
+    	Date maybeCopy = (Date) maybeDate;
+    	return maybeCopy.day == day && maybeCopy.month == month && maybeCopy.year == year;
     }
 
     public void setDate(int monthInt, int day, int year)
@@ -192,6 +204,7 @@ public class Date
             else
                 System.out.println("Illegal date. Reenter input.");
          }
+        keyboard.close(); //mpe
     }
 
     private boolean dateOK(int monthInt, int dayInt, int yearInt)
@@ -254,7 +267,9 @@ public class Date
     }
     public static void main(String[] args) {
         System.out.println("Main in Date.");
-        Date tester = new Date();
+        Date tester = new Date(1,2,2023);
         System.out.println("tester is "+tester);
+        Date who = (Date)tester.clone();
+        System.out.println("they are equals="+tester.equals(who));
     }
 }
