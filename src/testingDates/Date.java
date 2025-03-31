@@ -221,6 +221,11 @@ public class Date implements Cloneable
                  (yearInt >= 1000) && (yearInt <= 9999) );
     }
 
+    private Date addOneDay(){
+    	   System.out.println("Date.addOneDay() is not yet implemented.");
+    	   return this;
+    }
+    
     private boolean monthOK(String month)
     {
         return (month.equals("January") || month.equals("February") ||
