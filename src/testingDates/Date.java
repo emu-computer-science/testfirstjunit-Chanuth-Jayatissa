@@ -70,20 +70,49 @@ public class Date implements Cloneable
         }
     }
 
-    public void setDate(String monthString, int day, int year)
-    {
-        if (dateOK(monthString, day, year))
-        {
-            this.month = monthString;
-            this.day = day;
-            this.year = year;
+    public Date setDate(String monthString, int day, int year) {
+        if (!dateOK(monthString, day, year)) {
+            return null;
         }
-        else
-        {
-            System.out.println("Fatal Error in setDate(String,int, int)");
-            System.exit(0);
+
+        int monthNum = 0;
+        if (monthString.equals("January"))
+            monthNum = 1;
+        else if (monthString.equals("February"))
+            monthNum = 2;
+        else if (monthString.equals("March"))
+            monthNum = 3;
+        else if (monthString.equals("April"))
+            monthNum = 4;
+        else if (monthString.equals("May"))
+            monthNum = 5;
+        else if (monthString.equals("June"))
+            monthNum = 6;
+        else if (monthString.equals("July"))
+            monthNum = 7;
+        else if (monthString.equals("August"))
+            monthNum = 8;
+        else if (monthString.equals("September"))
+            monthNum = 9;
+        else if (monthString.equals("October"))
+            monthNum = 10;
+        else if (monthString.equals("November"))
+            monthNum = 11;
+        else if (monthString.equals("December"))
+            monthNum = 12;
+
+        int[] daysInMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        if (day > daysInMonth[monthNum]) {
+            return null;
         }
+
+        this.month = monthString;
+        this.day = day;
+        this.year = year;
+        return this;
     }
+
 
     public void setDate(int year)
     {
@@ -221,10 +250,24 @@ public class Date implements Cloneable
                  (yearInt >= 1000) && (yearInt <= 9999) );
     }
 
-    private Date addOneDay(){
-    	   System.out.println("Date.addOneDay() is not yet implemented.");
-    	   return this;
+    public Date addOneDay() {
+        int currentMonth = getMonth();
+        int[] daysInMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if (this.day < daysInMonth[currentMonth]) {
+            this.day++;
+        } else {
+            if (currentMonth == 12) {
+                this.day = 1;
+                this.month = monthString(1);
+                this.year++;
+            } else {
+                this.day = 1;
+                this.month = monthString(currentMonth + 1);
+            }
+        }
+        return this;
     }
+
     
     private boolean monthOK(String month)
     {
